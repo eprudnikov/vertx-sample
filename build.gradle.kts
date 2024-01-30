@@ -38,6 +38,8 @@ dependencies {
   implementation("io.vertx:vertx-lang-kotlin")
   implementation(kotlin("stdlib-jdk8"))
   implementation("com.ongres.scram:client:2.1")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+
   testImplementation("io.vertx:vertx-junit5")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 }
