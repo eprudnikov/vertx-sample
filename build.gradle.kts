@@ -40,8 +40,12 @@ dependencies {
   implementation("com.ongres.scram:client:2.1")
   implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
 
+  implementation("io.vertx:vertx-pg-client:4.5.2")
+
   testImplementation("io.vertx:vertx-junit5")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+
+  runtimeOnly("io.netty:netty-all:4.1.106.Final")
 }
 
 val compileKotlin: KotlinCompile by tasks
