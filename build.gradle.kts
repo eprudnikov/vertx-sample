@@ -3,7 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin ("jvm") version "1.7.21"
+  kotlin ("jvm") version "1.9.22"
   application
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
@@ -37,6 +37,7 @@ dependencies {
   implementation("io.vertx:vertx-micrometer-metrics")
   implementation("io.vertx:vertx-lang-kotlin")
   implementation(kotlin("stdlib-jdk8"))
+  implementation("io.insert-koin:koin-core:3.5.3")
   implementation("com.ongres.scram:client:2.1")
   implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
 

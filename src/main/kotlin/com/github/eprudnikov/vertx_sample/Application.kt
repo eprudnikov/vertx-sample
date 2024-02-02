@@ -1,51 +1,43 @@
 package com.github.eprudnikov.vertx_sample
 
+import com.github.eprudnikov.vertx_sample.configuration.persistenceModule
 import io.vertx.core.AsyncResult
-import io.vertx.pgclient.PgBuilder
-import io.vertx.pgclient.PgConnectOptions
-import io.vertx.sqlclient.PoolOptions
 import io.vertx.sqlclient.Row
 import io.vertx.sqlclient.RowSet
+import io.vertx.sqlclient.SqlClient
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
+import org.koin.fileProperties
 
+class SqlClientDemo: KoinComponent {
+   private val client: SqlClient = get()
 
-fun main () {
-  val connectOptions = PgConnectOptions()
-    .setPort(5432)
-    .setHost("localhost")
-    .setDatabase("XXX")
-    .setUser("postgres")
-    .setPassword("secret")
+  init {
+    client
+      .query("SELECT * FROM call")
+      .execute()
+      .onComplete { ar: AsyncResult<RowSet<Row?>> ->
+        if (ar.succeeded()) {
+          val result: RowSet<Row?> = ar.result()
+          System.out.println("Got " + result.size() + " calls ")
+        } else {
+          println("Failure: " + ar.cause().message)
+        }
 
-// Pool options
-
-// Pool options
-  val poolOptions: PoolOptions = PoolOptions()
-    .setMaxSize(5)
-
-// Create the client pool
-
-// Create the client pool
-  val client = PgBuilder
-    .client()
-    .with(poolOptions)
-    .connectingTo(connectOptions)
-    .build()
-
-// A simple query
-
-// A simple query
-  client
-    .query("SELECT * FROM call")
-    .execute()
-    .onComplete { ar: AsyncResult<RowSet<Row?>> ->
-      if (ar.succeeded()) {
-        val result: RowSet<Row?> = ar.result()
-        System.out.println("Got " + result.size() + " rows ")
-      } else {
-        println("Failure: " + ar.cause().message)
+        // Now close the pool
+        client.close()
       }
+  }
+}
 
-      // Now close the pool
-      client.close()
-    }
+fun main() {
+  startKoin {
+    printLogger(Level.INFO) // Enable logging to see what's happening
+    fileProperties()
+    modules(persistenceModule)
+  }
+
+  SqlClientDemo()
 }
