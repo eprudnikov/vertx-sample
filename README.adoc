@@ -1,8 +1,22 @@
 = Vertx-sample
 
-image:https://img.shields.io/badge/vert.x-4.5.1-purple.svg[link="https://vertx.io"]
+This project demonstrates the implementation of common functionality using the reactive paradigm with Vert.x, focusing on database interaction, ORM integration, API exposure, and component wiring using a DI framework.
 
-This application was generated using http://start.vertx.io
+== To-Do List
+
+* [ ] Connect to a PostgreSQL Database
+** Setup a connection to a PostgreSQL database, ensuring reactive drivers are used for non-blocking I/O operations.
+
+* [ ] Integrate Hibernate as ORM Framework
+** [ ] Implement functionality to allow building flexible search criteria.
+** [ ] Support fetching pageable results as well as streaming records to handle large datasets efficiently.
+
+* [ ] Expose HTTP API
+** [ ] Ensure the API supports pagination for efficient data retrieval.
+** [ ] Implement server-sent events (SSE) to stream bulky results.
+
+* [ ] Utilize a DI Framework for Component Wiring
+** Incorporate a Dependency Injection (DI) framework to seamlessly wire components together, promoting modularity and ease of maintenance.
 
 == Building
 
@@ -21,12 +35,5 @@ To run your application:
 ./gradlew clean run
 ```
 
-== Help
-
-* https://vertx.io/docs/[Vert.x Documentation]
-* https://stackoverflow.com/questions/tagged/vert.x?sort=newest&pageSize=15[Vert.x Stack Overflow]
-* https://groups.google.com/forum/?fromgroups#!forum/vertx[Vert.x User Group]
-* https://discord.gg/6ry7aqPWXy[Vert.x Discord]
-* https://gitter.im/eclipse-vertx/vertx-users[Vert.x Gitter]
 
 
