@@ -2,6 +2,7 @@ package com.github.eprudnikov.vertx_sample.configuration
 
 import io.vertx.pgclient.PgBuilder
 import io.vertx.pgclient.PgConnectOptions
+import io.vertx.sqlclient.Pool
 import io.vertx.sqlclient.PoolOptions
 import io.vertx.sqlclient.SqlClient
 import io.vertx.sqlclient.SqlConnectOptions
@@ -17,9 +18,9 @@ val persistenceModule = module {
       .setPassword(getProperty("persistence.password"))
   }
   single { PoolOptions().setMaxSize(5) }
-  single<SqlClient> {
+  single<Pool> {
     PgBuilder
-      .client()
+      .pool()
       .with(get())
       .connectingTo(get<SqlConnectOptions>())
       .build()
