@@ -1,11 +1,11 @@
 package com.github.eprudnikov.vertx_sample
 
-import com.github.eprudnikov.vertx_sample.features.call.handlers.CallRequestHandler
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Promise
 import io.vertx.ext.web.Router
+import org.koin.core.component.KoinComponent
 
-class MainVerticle : AbstractVerticle() {
+class MainVerticle : AbstractVerticle(), KoinComponent {
 
   override fun start(startPromise: Promise<Void>) {
     vertx
@@ -21,12 +21,14 @@ class MainVerticle : AbstractVerticle() {
       }
   }
 
-  fun getRouter(): Router {
-    // TODO Introduce DI and extract calls-specific routes into its package
-    val callRequestHandler = CallRequestHandler()
+  private fun getRouter(): Router {
+    val subRoutes = getKoin().getAll<Pair<String, Router>>()
 
-    val router = Router.router(vertx)
-    router.route("/calls").handler(callRequestHandler::getCalls)
-    return router
+    val mainRouter = Router.router(vertx)
+    subRoutes.forEach { urlToRouter ->
+      println("Register router to ${urlToRouter.first}")
+      mainRouter.route(urlToRouter.first).subRouter(urlToRouter.second)
+    }
+    return mainRouter
   }
 }

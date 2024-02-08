@@ -23,6 +23,7 @@ val persistenceModule = module {
       .pool()
       .with(get())
       .connectingTo(get<SqlConnectOptions>())
+      .using(get())
       .build()
   }
 }

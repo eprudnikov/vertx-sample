@@ -1,20 +1,22 @@
 package com.github.eprudnikov.vertx_sample.features.call.handlers
 
-import com.github.eprudnikov.vertx_sample.features.call.models.Call
-import io.vertx.core.json.JsonArray
+import com.github.eprudnikov.vertx_sample.features.call.repositories.CallRepository
+import io.vertx.core.json.Json
 import io.vertx.ext.web.RoutingContext
-import java.util.*
 
-class CallRequestHandler {
-  val data = listOf(
-    Call(UUID.randomUUID()),
-    Call(UUID.randomUUID()),
-    Call(UUID.randomUUID())
-  )
-
+class CallRequestHandler(private val callRepository: CallRepository) {
   fun getCalls(context: RoutingContext) {
-    context.response()
-      .putHeader("Content-Type", "application/json")
-      .end(JsonArray.of(data).toBuffer())
+    callRepository.findAll()
+      .onSuccess { calls ->
+        context.response()
+          .putHeader("Content-Type", "application/json")
+          .end(Json.encode(calls))
+      }
+      .onFailure { throwable ->
+        context.response()
+          .putHeader("Content-Type", "plain/text")
+          .setStatusCode(500)
+          .end(throwable.message)
+      }
   }
 }
