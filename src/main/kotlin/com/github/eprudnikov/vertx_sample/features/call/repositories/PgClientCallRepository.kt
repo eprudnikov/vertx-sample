@@ -1,26 +1,20 @@
 package com.github.eprudnikov.vertx_sample.features.call.repositories
 
 import com.github.eprudnikov.vertx_sample.features.call.models.Call
-import io.vertx.core.Future
-import io.vertx.core.Promise
-import io.vertx.sqlclient.Pool
-import io.vertx.sqlclient.Row
+import io.reactivex.rxjava3.core.Flowable
+import io.vertx.rxjava3.sqlclient.Pool
+import io.vertx.rxjava3.sqlclient.Row
+import java.time.ZoneOffset
 import java.util.*
 
 class PgClientCallRepository(val pool: Pool) : CallRepository {
 
-  override fun findAll(): Future<List<Call>> {
-    val promise = Promise.promise<List<Call>>()
-
-    pool.query("SELECT id::text FROM call LIMIT 10")
-      .execute()
-      .onSuccess { ar ->
-        promise.complete(ar.map(this::rowToCall))
-      }
-      .onFailure { throwable ->
-        promise.fail(throwable)
-      }
-    return promise.future();
+  override fun findAll(): Flowable<Call> {
+    // TODO create a prepared statement
+    return pool.query("SELECT id, tenant_id, created_at, updated_at, is_deleted FROM call LIMIT 10")
+      .rxExecute()
+      .flatMapPublisher { rowSet -> Flowable.fromIterable(rowSet)}
+      .map(::rowToCall)
   }
 
   private fun rowToCall(row: Row): Call {

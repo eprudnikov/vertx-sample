@@ -1,10 +1,9 @@
 package com.github.eprudnikov.vertx_sample.configuration
 
-import io.vertx.pgclient.PgBuilder
+import io.vertx.rxjava3.pgclient.PgBuilder
 import io.vertx.pgclient.PgConnectOptions
-import io.vertx.sqlclient.Pool
+import io.vertx.rxjava3.sqlclient.Pool
 import io.vertx.sqlclient.PoolOptions
-import io.vertx.sqlclient.SqlClient
 import io.vertx.sqlclient.SqlConnectOptions
 import org.koin.dsl.module
 

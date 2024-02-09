@@ -1,8 +1,8 @@
 package com.github.eprudnikov.vertx_sample.features.call.repositories
 
 import com.github.eprudnikov.vertx_sample.features.call.models.Call
-import io.vertx.core.Future
+import io.reactivex.rxjava3.core.Flowable
 
 interface CallRepository {
-  fun findAll(): Future<List<Call>>
+  fun findAll(): Flowable<Call>
 }

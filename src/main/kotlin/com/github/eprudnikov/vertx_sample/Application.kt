@@ -2,7 +2,7 @@ package com.github.eprudnikov.vertx_sample
 
 import com.github.eprudnikov.vertx_sample.configuration.persistenceModule
 import com.github.eprudnikov.vertx_sample.features.call.configuration.callModule
-import io.vertx.core.Vertx
+import io.vertx.rxjava3.core.Vertx
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.dsl.module
@@ -22,5 +22,9 @@ fun main() {
     )
   }
 
-  vertx.deployVerticle(MainVerticle())
+  vertx.deployVerticle(MainVerticle()).subscribe({ success ->
+    println("Ok! " + success)
+  }, { error ->
+    println("Nok!" + error)
+  })
 }

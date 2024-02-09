@@ -36,6 +36,7 @@ dependencies {
   implementation("io.vertx:vertx-pg-client")
   implementation("io.vertx:vertx-micrometer-metrics")
   implementation("io.vertx:vertx-lang-kotlin")
+  implementation("io.vertx:vertx-rx-java3")
   implementation(kotlin("stdlib-jdk8"))
   implementation("io.insert-koin:koin-core:3.5.3")
   implementation("com.ongres.scram:client:2.1")

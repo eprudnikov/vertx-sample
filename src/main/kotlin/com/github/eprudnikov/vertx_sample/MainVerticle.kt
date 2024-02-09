@@ -1,24 +1,17 @@
 package com.github.eprudnikov.vertx_sample
 
-import io.vertx.core.AbstractVerticle
-import io.vertx.core.Promise
-import io.vertx.ext.web.Router
+import io.reactivex.rxjava3.core.Completable
+import io.vertx.rxjava3.ext.web.Router
+import io.vertx.rxjava3.core.AbstractVerticle
 import org.koin.core.component.KoinComponent
 
 class MainVerticle : AbstractVerticle(), KoinComponent {
 
-  override fun start(startPromise: Promise<Void>) {
-    vertx
-      .createHttpServer()
+  override fun rxStart(): Completable {
+    return vertx.createHttpServer()
       .requestHandler(getRouter())
-      .listen(8888) { http ->
-        if (http.succeeded()) {
-          startPromise.complete()
-          println("HTTP server started on port 8888")
-        } else {
-          startPromise.fail(http.cause())
-        }
-      }
+      .rxListen(8888)
+      .ignoreElement()
   }
 
   private fun getRouter(): Router {
