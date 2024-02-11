@@ -11,6 +11,8 @@ class MainVerticle : AbstractVerticle(), KoinComponent {
     return vertx.createHttpServer()
       .requestHandler(getRouter())
       .rxListen(8888)
+      .doOnSuccess{server -> println("🔥 Start the HTTP server at port ${server.actualPort()}")}
+      .doOnError {error -> println("❌ Cannot start the HTTP server: ${error.message}") }
       .ignoreElement()
   }
 

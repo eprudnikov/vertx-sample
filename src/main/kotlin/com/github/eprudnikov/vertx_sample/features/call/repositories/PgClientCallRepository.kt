@@ -18,7 +18,12 @@ class PgClientCallRepository(val pool: Pool) : CallRepository {
   }
 
   private fun rowToCall(row: Row): Call {
-    val idAsString = row.getString("id")
-    return Call(UUID.fromString(idAsString))
+    return Call(
+      row.get(UUID::class.java, "id"),
+      row.get(UUID::class.java, "tenant_id"),
+      row.getLocalDateTime("created_at").toInstant(ZoneOffset.UTC),
+      row.getLocalDateTime("updated_at").toInstant(ZoneOffset.UTC),
+      row.getBoolean("is_deleted")
+    )
   }
 }

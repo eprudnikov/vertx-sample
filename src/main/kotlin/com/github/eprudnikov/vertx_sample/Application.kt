@@ -22,9 +22,8 @@ fun main() {
     )
   }
 
-  vertx.deployVerticle(MainVerticle()).subscribe({ success ->
-    println("Ok! " + success)
-  }, { error ->
-    println("Nok!" + error)
-  })
+  vertx.deployVerticle(MainVerticle()).subscribe(
+    { id -> println("✅ Verticle deployed with ID: $id") },
+    { error -> println("❌ Failed to deploy verticle: ${error.message}") }
+  )
 }
