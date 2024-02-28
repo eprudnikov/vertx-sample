@@ -45,6 +45,7 @@ dependencies {
   implementation("io.vertx:vertx-pg-client:4.5.2")
 
   testImplementation("io.vertx:vertx-junit5")
+  testImplementation("io.vertx:vertx-junit5-rx-java3")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 
   runtimeOnly("io.netty:netty-all:4.1.106.Final")
